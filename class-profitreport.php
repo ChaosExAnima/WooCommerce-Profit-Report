@@ -22,6 +22,16 @@ class ProfitReport extends WC_Admin_Report {
 	public $product_ids = array();
 
 	/**
+	 * Constructor.
+	 *
+	 * @returns void
+	 */
+	public function __construct() {
+		parent::__construct();
+		add_action( 'woocommerce_checkout_create_order', [ $this, 'clear_report_cache' ] );
+	}
+
+	/**
 	 * Output the report.
 	 *
 	 * @return void
@@ -135,5 +145,14 @@ class ProfitReport extends WC_Admin_Report {
 		$payment_gateways = WC()->payment_gateways()->payment_gateways();
 
 		require_once plugin_dir_path( __FILE__ ) . '/report-view.php';
+	}
+
+	/**
+	 * Clears the report cache.
+	 *
+	 * @return void
+	 */
+	public function clear_report_cache() : void {
+		delete_transient( strtolower( get_class( $this ) ) );
 	}
 }
