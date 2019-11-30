@@ -27,7 +27,6 @@ class ProfitReport extends WC_Admin_Report {
 	 * @returns void
 	 */
 	public function __construct() {
-		parent::__construct();
 		add_action( 'woocommerce_checkout_create_order', [ $this, 'clear_report_cache' ] );
 	}
 
